@@ -497,6 +497,7 @@ fun RegisterScreen(viewModel: FaceDetectionViewModel) {
     }
 }
 
+
 @Composable
 fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
     val recognitionState by viewModel.recognitionState.collectAsState()
@@ -506,6 +507,7 @@ fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Camera Preview Card
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -552,6 +554,7 @@ fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Control Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -597,6 +600,7 @@ fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Recognition Status Card
         when (recognitionState) {
             is RecognitionState.Recognizing -> {
                 RecognitionStatusCard(
@@ -612,10 +616,8 @@ fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
 
-                LaunchedEffect(Unit) {
-                    delay(2000)
-                    viewModel.simulateRecognition()
-                }
+                // ❌ REMOVE THIS LaunchedEffect
+                // It was calling simulateRecognition() which caused the error
             }
             is RecognitionState.Success -> {
                 val success = recognitionState as RecognitionState.Success
@@ -659,6 +661,7 @@ fun RecognizeScreen(viewModel: FaceDetectionViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Info Card
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
